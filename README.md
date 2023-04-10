@@ -12,8 +12,8 @@ MySQL
 
 # Como Executar o Projeto
 Clone o repositório em sua máquina local
-Configure as informações de conexão com o banco de dados MySQL no arquivo "DatabaseConnection.java" localizado em "src/main/java/br/com/gerenciadortarefas/database/"
-Execute o arquivo "Main.java" localizado em "src/main/java/br/com/gerenciadortarefas/"
+Configure as informações de conexão com o banco de dados MySQL no arquivo "ConnectionFactory.java" localizado em "app/src/main/java/controls/"
+Execute o arquivo "App.java" na sua IDE.
 
 # Contribuição
 Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou um pull request para reportar problemas, propor melhorias ou adicionar novas funcionalidades.
