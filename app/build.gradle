@@ -22,17 +22,24 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
+<<<<<<< HEAD
 
     implementation 'mysql:mysql-connector-java:8.0.28'
 
     // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
     implementation group: 'org.springframework', name: 'spring-jdbc', version: '3.1.0.RELEASE'
 
+=======
+>>>>>>> 02c73e2 (Add icons)
 }
 
 application {
     // Define the main class for the application.
+<<<<<<< HEAD
     mainClass = 'toDoApp.App'
+=======
+    mainClass = 'toDoApp2.App'
+>>>>>>> 02c73e2 (Add icons)
 }
 
 tasks.named('test') {
