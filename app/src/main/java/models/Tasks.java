@@ -12,20 +12,23 @@ public class Tasks {
     private int id_project;
     private String name;
     private String description;
-    private Boolean completed;
+    private Date completed;
     private String notes;
     private Date created_at;
     private Date update_at;
-    
-    public Tasks(){
-        this.id = id;
-        this.id_project = id_project;
+
+    public Tasks(int id, String name, String description, Date completed, String notes, Date created_at, Date update_at) {            
         this.name = name;
         this.description = description;
         this.completed = completed;
         this.notes = notes;
         this.created_at = created_at;
         this.update_at = update_at;
+    }
+
+    public Tasks() {
+        this.created_at = new Date();
+        this.update_at = new Date();
     }
 
     public int getId() {
@@ -52,11 +55,11 @@ public class Tasks {
         this.description = description;
     }
 
-    public Boolean getCompleted() {
+    public Date getCompleted() {
         return completed;
     }
 
-    public void setCompleted(Boolean completed) {
+    public void setCompleted(Date completed) {
         this.completed = completed;
     }
 
@@ -96,7 +99,5 @@ public class Tasks {
     public void setId_project(int id_project) {
         this.id_project = id_project;
     }
-        
-     
-    
+
 }

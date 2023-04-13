@@ -34,7 +34,7 @@ public class ProjectsControls {
             statement.setString(1, project.getName());
             statement.setString(2, project.getDescription());
             statement.setDate(3, new java.sql.Date(project.getCreateDate().getTime()));
-            statement.setDate(4, new java.sql.Date(project.getUpdateDate().getTime()));
+            statement.setDate(4, new java.sql.Date(project.getUpdateDate().getTime()));            
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar os dados!" + e.getMessage());
@@ -45,12 +45,7 @@ public class ProjectsControls {
 
     public void update(Projects project) throws SQLException {
 
-        String sql = "UPDATE projects SET "
-                + "name = ?,"
-                + "description = ?,"
-                + "createDate = ?,"
-                + "updatedate = ?,"
-                + "WHERE id = ?";
+        String sql = "UPDATE projects SET name = ?,description = ? ,createDate = ? ,updatedate = ? WHERE id = ?";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -61,8 +56,9 @@ public class ProjectsControls {
             statement = connection.prepareStatement(sql);
             statement.setString(1, project.getName());
             statement.setString(2, project.getDescription());
-            //  statement.setDate(3, (java.sql.Date) new Date(project.getCreateDate().getTime()));
-            //  statement.setDate(4, (java.sql.Date) new Date(project.getUpdateDate().getTime()));
+            statement.setDate(3, new java.sql.Date(project.getCreateDate().getTime()));
+            statement.setDate(4, new java.sql.Date(project.getUpdateDate().getTime()));
+            statement.setInt(5, project.getId());
 
             statement.execute();
         } catch (SQLException ex) {
@@ -119,8 +115,8 @@ public class ProjectsControls {
                 p.setId(result.getInt("id"));
                 p.setName(result.getString("name"));
                 p.setDescription(result.getString("description"));
-                // p.setCreateDate(result.getDate("createDate"));
-                //  p.setUpdateDate(result.getDate("updateDate"));
+                p.setCreateDate(result.getDate("createDate"));
+                p.setUpdateDate(result.getDate("updateDate"));
                 project.add(p);
 
             }

@@ -1,4 +1,3 @@
-
 package controls;
 
 import java.sql.Connection;
@@ -19,14 +18,7 @@ public class TaskControls {
 
     public void save(Tasks task) {
 
-        String sql = "INSERT INTO tasks(id_project"
-                + "id"
-                + "name"
-                + "description"
-                + "completed"
-                + "notes"
-                + "created_at"
-                + "update_at" + ") VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tasks(id_project,name,description,completed,notes,created_at,updated_at) VALUES (?,?,?,?,?,?,?)";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -37,11 +29,11 @@ public class TaskControls {
             statement.setInt(1, task.getId_project());
             statement.setString(2, task.getName());
             statement.setString(3, task.getDescription());
-            statement.setBoolean(4, task.getCompleted());
+            statement.setDate(4,new java.sql.Date( task.getCompleted().getTime()));
             statement.setString(5, task.getNotes());
-            statement.setDate(6, (java.sql.Date) new Date(task.getCreated_at().getTime()));
-            statement.setDate(7, (java.sql.Date) new Date(task.getUpdate_at().getTime()));
-            statement.setInt(1, task.getId());
+            statement.setDate(6, new java.sql.Date(task.getCreated_at().getTime()));
+            statement.setDate(7, new java.sql.Date(task.getUpdate_at().getTime()));
+            //statement.setInt(1, task.getId());
 
             statement.execute();
         } catch (SQLException e) {
@@ -53,15 +45,7 @@ public class TaskControls {
 
     public void update(Tasks task) throws SQLException {
 
-        String sql = "UPDATE tasks SET "
-                + "id_project = ?"
-                + "name = ?"
-                + "description = ?"
-                + "completed = ?"
-                + "notes = ?"
-                + "created_at = ?"
-                + "updated_at = ?"
-                +"WHERE id = ?";
+        String sql = "UPDATE tasks SET id_project = ? , name = ?, description = ?, completed = ?, notes = ?, created_at = ?, updated_at = ? WHERE id = ?";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -73,10 +57,10 @@ public class TaskControls {
             statement.setInt(1, task.getId_project());
             statement.setString(2, task.getName());
             statement.setString(3, task.getDescription());
-            statement.setBoolean(4, task.getCompleted());
+            statement.setDate(4,new java.sql.Date( task.getCompleted().getTime()));
             statement.setString(5, task.getNotes());
-            statement.setDate(6, (java.sql.Date) new Date(task.getCreated_at().getTime()));
-            statement.setDate(7, (java.sql.Date) new Date(task.getUpdate_at().getTime()));
+            statement.setDate(6, new java.sql.Date(task.getCreated_at().getTime()));
+            statement.setDate(7, new java.sql.Date(task.getUpdate_at().getTime()));
             statement.setInt(8, task.getId());
             statement.execute();
         } catch (SQLException ex) {
@@ -106,7 +90,7 @@ public class TaskControls {
             throw new SQLException("Erro ao deletar a tarefa!");
         } finally {
 
-            ConnectionFactory.closeConnection(connection,statement);
+            ConnectionFactory.closeConnection(connection, statement);
         }
 
     }
@@ -136,7 +120,7 @@ public class TaskControls {
                 task.setId_project(result.getInt("id_project"));
                 task.setName(result.getString("name"));
                 task.setDescription(result.getString("description"));
-                task.setCompleted(result.getBoolean("completed"));
+                task.setCompleted(result.getDate("completed"));
                 task.setNotes(result.getString("notes"));
                 task.setCreated_at(result.getDate("created_at"));
                 task.setUpdate_at(result.getDate("update_at"));
@@ -145,11 +129,10 @@ public class TaskControls {
 
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao selecionar a tarefa!",e);
-        }
-        finally{
+            throw new RuntimeException("Erro ao selecionar a tarefa!", e);
+        } finally {
             ConnectionFactory.closeConnection(connection, statement, result);
         }
-                return tasks;
+        return tasks;
     }
 }

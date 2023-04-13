@@ -4,29 +4,31 @@
 package toDoApp;
 
 import controls.ProjectsControls;
+import controls.TaskControls;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Projects;
+import models.Tasks;
 
 public class App {
-  
-    public static void main(String[] args) {
-  
-        ProjectsControls projectControl = new ProjectsControls();
-        Projects project = new Projects();
-        
-        project.setName("Academia");
-        project.setDescription("Criando projeto");
-        System.out.println(project.getCreateDate());
-        System.out.println(project.getUpdateDate());
-        
-        Projects project2 = new Projects();
-        
-        project2.setName("Dieta");
-        project2.setDescription("Usado para calcular a dieta!");
-        
-        System.out.println(project.getId());
-              
-        
-        
-     
+
+    public static void main(String[] args) throws SQLException {
+        ProjectsControls controller = new ProjectsControls();
+
+//        Projects project = new Projects();
+//        
+//        List<Projects> projects = controller.getAll();
+//        
+//        System.out.println(projects.size());
+//                
+            int i = 6;
+           while(i<10){
+           controller.removeById(i);
+           
+           i++;
+           }
     }
 }

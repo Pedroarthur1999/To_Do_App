@@ -7,9 +7,5 @@
  * in the user manual at https://docs.gradle.org/8.0-rc-1/userguide/multi_project_builds.html
  */
 
-<<<<<<< HEAD
 rootProject.name = 'toDoApp'
-=======
-rootProject.name = 'toDoApp2'
->>>>>>> 02c73e2 (Add icons)
 include('app')
