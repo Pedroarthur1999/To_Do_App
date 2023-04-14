@@ -8,30 +8,42 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+public class TaskTableModel extends AbstractTableModel {
 
-public class TaskTableModel extends AbstractTableModel{
-
-    
-    String[] colunas = ["Nome","Descrição","Prazo","Tarefa Concluida","Editar","Excluir"];
+    String[] colunas = {"Nome","Descrição","Prazo","Editar","Excluir"};
     
     List<Tasks> tasks = new ArrayList<>();
-    
-    
-    
+
     @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return tasks.size();
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return colunas.length;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        switch (columnIndex) {
+            case 1:
+                return tasks.get(rowIndex).getName();
+            case 2:
+                return tasks.get(rowIndex).getDescription();
+            case 3:
+                return tasks.get(rowIndex).getCompleted();
+            case 4:
+                return tasks.get(rowIndex).getNotes();
+            case 5:
+                return "";
+            case 6:
+                return "";
+            default:
+                return "Dados não encontrados!";
+        }
+
     }
-    
-    
+
 }
