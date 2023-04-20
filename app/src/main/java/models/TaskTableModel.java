@@ -51,7 +51,7 @@ public class TaskTableModel extends AbstractTableModel {
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
 
-        return columnIndex == 3;
+        return columnIndex == 4;
     }
     @Override
     public Class<?> getColumnClass(int columnIndex) {
@@ -60,6 +60,12 @@ public class TaskTableModel extends AbstractTableModel {
         }
         
         return getValueAt(0, columnIndex).getClass();
+    }
+    @Override
+     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+         
+         tasks.get(rowIndex).setTask_completed((Boolean) aValue);
+         
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {

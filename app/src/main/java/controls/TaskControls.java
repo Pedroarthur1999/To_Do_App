@@ -104,7 +104,7 @@ public class TaskControls {
         PreparedStatement statement = null;
         ResultSet result = null;
 
-        List<Tasks> tasks = new ArrayList();
+        List<Tasks> tasks = new ArrayList<>();
         
 
         try {
