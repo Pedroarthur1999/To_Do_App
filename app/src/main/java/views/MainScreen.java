@@ -16,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import models.Projects;
+import models.TaskTableModel;
+import models.Tasks;
 
 /**
  *
@@ -26,6 +28,7 @@ public class MainScreen extends javax.swing.JFrame {
     ProjectsControls projectController;
     TaskControls taskController;
     DefaultListModel projectModel;
+    TaskTableModel tasksModel;
 
     public MainScreen() {
         initComponents();
@@ -317,13 +320,13 @@ public class MainScreen extends javax.swing.JFrame {
         ProjectDialog projectDialog = new ProjectDialog(this, rootPaneCheckingEnabled);
 
         projectDialog.setVisible(true);
-        
-        projectDialog.addWindowListener(new WindowAdapter(){
-        
-        public void windowClosed(WindowEvent e){
-            
-        initComponentsModel();
-        }
+
+        projectDialog.addWindowListener(new WindowAdapter() {
+
+            public void windowClosed(WindowEvent e) {
+
+                initComponentsModel();
+            }
         });
 
 
@@ -416,13 +419,31 @@ public class MainScreen extends javax.swing.JFrame {
         projectModel = new DefaultListModel<Projects>();
         projectLoad();
 
+        tasksModel = new TaskTableModel();
+        jTable.setModel(tasksModel);
+        loadTask(7);
+
+    }
+
+    public void loadTask(int id_project) {
+        try {
+            List<Tasks> tasks;
+
+            tasks = taskController.getAll(id_project);
+             tasksModel.setTasks(tasks);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+       
+
     }
 
     public void projectLoad() {
 
         try {
             List<Projects> project = projectController.getAll();
-           projectModel.clear();
+            projectModel.clear();
 
             for (int i = 0; i < project.size(); i++) {
 

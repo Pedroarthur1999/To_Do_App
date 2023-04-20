@@ -103,7 +103,8 @@ public class TaskControls {
         PreparedStatement statement = null;
         ResultSet result = null;
 
-        List<Tasks> tasks = new ArrayList<Tasks>();
+        List<Tasks> tasks = new ArrayList();
+        
 
         try {
 
@@ -123,7 +124,7 @@ public class TaskControls {
                 task.setCompleted(result.getDate("completed"));
                 task.setNotes(result.getString("notes"));
                 task.setCreated_at(result.getDate("created_at"));
-                task.setUpdate_at(result.getDate("update_at"));
+                task.setUpdate_at(result.getDate("updated_at"));
 
                 tasks.add(task);
 

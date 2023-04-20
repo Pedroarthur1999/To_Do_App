@@ -6,6 +6,7 @@ package toDoApp;
 import controls.ProjectsControls;
 import controls.TaskControls;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,17 +19,23 @@ public class App {
     public static void main(String[] args) throws SQLException {
         ProjectsControls controller = new ProjectsControls();
 
-//        Projects project = new Projects();
-//        
-//        List<Projects> projects = controller.getAll();
-//        
-//        System.out.println(projects.size());
-//                
-            int i = 6;
-           while(i<10){
-           controller.removeById(i);
-           
-           i++;
-           }
+        TaskControls tasks = new TaskControls();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        Tasks task = new Tasks();
+        
+        task.setName("Olá mundo 2");
+        task.setDescription("testando mais uma vez o update");
+        task.setId_project(6);
+        task.setCompleted(new Date(2032-12-12));
+        
+        tasks.removeById(20);
+        
+        
+        
+        
+
+        
+
     }
 }
