@@ -18,7 +18,7 @@ public class TaskControls {
 
     public void save(Tasks task) {
 
-        String sql = "INSERT INTO tasks(id_project,name,description,completed,notes,created_at,updated_at) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tasks(id_project,name,description,completed,notes,created_at,updated_at,task_completed) VALUES (?,?,?,?,?,?,?,?)";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -33,7 +33,7 @@ public class TaskControls {
             statement.setString(5, task.getNotes());
             statement.setDate(6, new java.sql.Date(task.getCreated_at().getTime()));
             statement.setDate(7, new java.sql.Date(task.getUpdate_at().getTime()));
-            //statement.setInt(1, task.getId());
+            statement.setBoolean(8, task.getTask_completed());
 
             statement.execute();
         } catch (SQLException e) {
@@ -45,7 +45,7 @@ public class TaskControls {
 
     public void update(Tasks task) throws SQLException {
 
-        String sql = "UPDATE tasks SET id_project = ? , name = ?, description = ?, completed = ?, notes = ?, created_at = ?, updated_at = ? WHERE id = ?";
+        String sql = "UPDATE tasks SET id_project = ? , name = ?, description = ?, completed = ?, notes = ?, created_at = ?, updated_at = ?, task_completed = ? WHERE id = ?";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -61,7 +61,8 @@ public class TaskControls {
             statement.setString(5, task.getNotes());
             statement.setDate(6, new java.sql.Date(task.getCreated_at().getTime()));
             statement.setDate(7, new java.sql.Date(task.getUpdate_at().getTime()));
-            statement.setInt(8, task.getId());
+            statement.setBoolean(8, task.getTask_completed());
+            statement.setInt(9, task.getId());
             statement.execute();
         } catch (SQLException ex) {
             throw new RuntimeException("Erro ao alterar os dados!" + ex.getMessage());
@@ -125,6 +126,7 @@ public class TaskControls {
                 task.setNotes(result.getString("notes"));
                 task.setCreated_at(result.getDate("created_at"));
                 task.setUpdate_at(result.getDate("updated_at"));
+                task.setTask_completed(result.getBoolean("task_completed"));
 
                 tasks.add(task);
 

@@ -4,14 +4,15 @@
  */
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class TaskTableModel extends AbstractTableModel {
 
-    String[] colunas = {"Nome","Descrição","Prazo","Notas","Editar","Excluir"};
-    
+    String[] colunas = {"Nome", "Descrição", "Prazo", "Notas","Tarefa Concluida", "Editar", "Excluir"};
+
     List<Tasks> tasks = new ArrayList<>();
 
     @Override
@@ -39,13 +40,27 @@ public class TaskTableModel extends AbstractTableModel {
     public int getColumnCount() {
         return colunas.length;
     }
+
     @Override
-    public String getColumnName(int column){
-        
+    public String getColumnName(int column) {
+
         return colunas[column];
-        
+
     }
 
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+
+        return columnIndex == 3;
+    }
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if(tasks.isEmpty()){                    
+        return Object.class;
+        }
+        
+        return getValueAt(0, columnIndex).getClass();
+    }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
 
@@ -55,12 +70,16 @@ public class TaskTableModel extends AbstractTableModel {
             case 1:
                 return tasks.get(rowIndex).getDescription();
             case 2:
-                return tasks.get(rowIndex).getCompleted();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+                return dateFormat.format(tasks.get(rowIndex).getCompleted());
             case 3:
                 return tasks.get(rowIndex).getNotes();
             case 4:
-                return "";
+                return tasks.get(rowIndex).getTask_completed();
             case 5:
+                return "";
+            case 6:
                 return "";
             default:
                 return "Dados não encontrados!";

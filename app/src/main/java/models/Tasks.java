@@ -16,14 +16,24 @@ public class Tasks {
     private String notes;
     private Date created_at;
     private Date update_at;
+    private Boolean task_completed;
 
-    public Tasks(int id, String name, String description, Date completed, String notes, Date created_at, Date update_at) {            
+    public Tasks(int id, String name, String description, Date completed, String notes, Date created_at, Date update_at, Boolean task_completed) {            
         this.name = name;
         this.description = description;
         this.completed = completed;
         this.notes = notes;
         this.created_at = created_at;
         this.update_at = update_at;
+        this.task_completed = this.task_completed;
+    }
+
+    public Boolean getTask_completed() {
+        return task_completed;
+    }
+
+    public void setTask_completed(Boolean task_completed) {
+        this.task_completed = task_completed;
     }
 
     public Tasks() {

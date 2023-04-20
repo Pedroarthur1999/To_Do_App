@@ -87,7 +87,7 @@ public class ProjectDialog extends javax.swing.JDialog {
 
         jLabel2.setBackground(new java.awt.Color(0, 153, 0));
         jLabel2.setForeground(new java.awt.Color(51, 255, 153));
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\eu\\Documents\\GitHub\\login_back-end\\toDoApp2\\icons\\check.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
