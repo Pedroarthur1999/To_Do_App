@@ -16,21 +16,30 @@ import models.Tasks;
 
 public class App {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args){
         ProjectsControls controller = new ProjectsControls();
 
         TaskControls tasks = new TaskControls();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        Tasks task = new Tasks();
         
-        task.setName("Olá mundo 2");
-        task.setDescription("testando mais uma vez o update");
-        task.setId_project(6);
-        task.setCompleted(new Date(2032-12-12));
         
-        tasks.removeById(20);
-        
+        try {
+            System.out.println(tasks.getAll());
+            
+            
+            //        Tasks task = new Tasks();;
+//
+//        task.setName("Olá mundo 2");
+//        task.setDescription("testando mais uma vez o update");
+//        task.setCompleted(new Date(2032-12-12));
+//        task.setTask_completed(false);
+//        task.setId_project(23);
+//
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
         
         
         

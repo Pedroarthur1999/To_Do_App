@@ -29,10 +29,10 @@ public class TaskControls {
             statement.setInt(1, task.getId_project());
             statement.setString(2, task.getName());
             statement.setString(3, task.getDescription());
-            statement.setDate(4,new java.sql.Date( task.getCompleted().getTime()));
+            statement.setDate(4, new java.sql.Date(task.getCompleted().getTime()));
             statement.setString(5, task.getNotes());
             statement.setDate(6, new java.sql.Date(task.getCreated_at().getTime()));
-            statement.setDate(7, new java.sql.Date(task.getUpdate_at().getTime()));
+            statement.setDate(7, new java.sql.Date(task.getUpdated_at().getTime()));
             statement.setBoolean(8, task.getTask_completed());
 
             statement.execute();
@@ -57,10 +57,10 @@ public class TaskControls {
             statement.setInt(1, task.getId_project());
             statement.setString(2, task.getName());
             statement.setString(3, task.getDescription());
-            statement.setDate(4,new java.sql.Date( task.getCompleted().getTime()));
+            statement.setDate(4, new java.sql.Date(task.getCompleted().getTime()));
             statement.setString(5, task.getNotes());
             statement.setDate(6, new java.sql.Date(task.getCreated_at().getTime()));
-            statement.setDate(7, new java.sql.Date(task.getUpdate_at().getTime()));
+            statement.setDate(7, new java.sql.Date(task.getUpdated_at().getTime()));
             statement.setBoolean(8, task.getTask_completed());
             statement.setInt(9, task.getId());
             statement.execute();
@@ -96,22 +96,20 @@ public class TaskControls {
 
     }
 
-    public List<Tasks> getAll(int id_project) throws SQLException {
+    public List<Tasks> getAll() throws SQLException {
 
-        String sql = "SELECT * FROM tasks WHERE id_project = ?";
+        String sql = "SELECT * FROM tasks";
 
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet result = null;
 
         List<Tasks> tasks = new ArrayList<>();
-        
 
         try {
 
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, id_project);
             result = statement.executeQuery();
 
             while (result.next()) {
@@ -125,7 +123,7 @@ public class TaskControls {
                 task.setCompleted(result.getDate("completed"));
                 task.setNotes(result.getString("notes"));
                 task.setCreated_at(result.getDate("created_at"));
-                task.setUpdate_at(result.getDate("updated_at"));
+                task.setUpdated_at(result.getDate("updated_at"));
                 task.setTask_completed(result.getBoolean("task_completed"));
 
                 tasks.add(task);
@@ -137,5 +135,48 @@ public class TaskControls {
             ConnectionFactory.closeConnection(connection, statement, result);
         }
         return tasks;
+
+    }
+
+    public List<Tasks> getTaskById(int id_project) {
+
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rst = null;
+        String sql = "SELECT * FROM tasks WHERE id_project = ?";
+
+        try {
+
+            conn = ConnectionFactory.getConnection();
+            stm = conn.prepareStatement(sql);
+
+            stm.setInt(1, id_project);
+            rst = stm.executeQuery();
+
+            List<Tasks> tasks = new ArrayList<>();
+
+            while (rst.next()) {
+
+                Tasks task = new Tasks();
+
+                task.setId(rst.getInt("id"));
+                task.setId_project(rst.getInt("id_project"));
+                task.setName(rst.getString("name"));
+                task.setDescription(rst.getString("description"));
+                task.setCompleted(rst.getDate("completed"));
+                task.setNotes(rst.getString("notes"));
+                task.setCreated_at(rst.getDate("created_at"));
+                task.setUpdated_at(rst.getDate("updated_at"));
+                task.setTask_completed(rst.getBoolean("task_completed"));
+
+                tasks.add(task);
+            }
+            return tasks;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao selecionar a tarefa", e);
+        } finally {
+            ConnectionFactory.closeConnection(conn, stm, rst);
+        }
     }
 }

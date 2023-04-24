@@ -15,17 +15,19 @@ public class Tasks {
     private Date completed;
     private String notes;
     private Date created_at;
-    private Date update_at;
+    private Date updated_at;
     private Boolean task_completed;
 
-    public Tasks(int id, String name, String description, Date completed, String notes, Date created_at, Date update_at, Boolean task_completed) {            
+    public Tasks(int id,int id_project, String name, String description, Date completed, String notes, Date created_at, Date updated_at, Boolean task_completed) {            
+        this.id = id;
+        this.id_project = id_project;
         this.name = name;
         this.description = description;
         this.completed = completed;
         this.notes = notes;
         this.created_at = created_at;
-        this.update_at = update_at;
-        this.task_completed = this.task_completed;
+        this.updated_at = updated_at;
+        this.task_completed = task_completed;
     }
 
     public Boolean getTask_completed() {
@@ -38,7 +40,8 @@ public class Tasks {
 
     public Tasks() {
         this.created_at = new Date();
-        this.update_at = new Date();
+        this.updated_at = new Date();
+        this.completed = new Date();
     }
 
     public int getId() {
@@ -47,6 +50,13 @@ public class Tasks {
 
     public void setId(int id) {
         this.id = id;
+    }
+  public int getId_project() {
+        return id_project;
+    }
+
+    public void setId_project(int id_project) {
+        this.id_project = id_project;
     }
 
     public String getName() {
@@ -89,25 +99,19 @@ public class Tasks {
         this.created_at = created_at;
     }
 
-    public Date getUpdate_at() {
-        return update_at;
+    public Date getUpdated_at() {
+        return updated_at;
     }
 
-    public void setUpdate_at(Date update_at) {
-        this.update_at = update_at;
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
     }
 
     @Override
     public String toString() {
-        return "Tasks{" + "id=" + id + ", name=" + name + ", description=" + description + ", completed=" + completed + ", notes=" + notes + ", created_at=" + created_at + ", update_at=" + update_at + '}';
+        return "Tasks{" + "id=" + id + ", id_project=" + id_project + ", name=" + name + ", description=" + description + ", completed=" + completed + ", notes=" + notes + ", created_at=" + created_at + ", updated_at=" + updated_at + ", task_completed=" + task_completed + '}';
     }
+    
 
-    public int getId_project() {
-        return id_project;
-    }
-
-    public void setId_project(int id_project) {
-        this.id_project = id_project;
-    }
-
+  
 }
