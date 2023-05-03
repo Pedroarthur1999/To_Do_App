@@ -5,6 +5,7 @@ package toDoApp;
 
 import controls.ProjectsControls;
 import controls.TaskControls;
+import controls.UserControls;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,33 +14,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Projects;
 import models.Tasks;
+import models.User;
 
 public class App {
 
     public static void main(String[] args){
-        ProjectsControls controller = new ProjectsControls();
-
-        TaskControls tasks = new TaskControls();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
+       
+        
+        User users = new User();
+        UserControls controller = new UserControls();
+        
+//        users.setLogin("pedro arthur");
+//        users.setSenha("jiujitsu10");
+        
+        controller.removeById(1);
         
         
-        try {
-            System.out.println(tasks.getAll());
-            
-            
-            //        Tasks task = new Tasks();;
-//
-//        task.setName("Olá mundo 2");
-//        task.setDescription("testando mais uma vez o update");
-//        task.setCompleted(new Date(2032-12-12));
-//        task.setTask_completed(false);
-//        task.setId_project(23);
-//
-        } catch (SQLException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
-           
+        
+        
         
         
         

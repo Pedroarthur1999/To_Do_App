@@ -13,13 +13,23 @@ public class Projects {
     private String description;
     public Date createDate;
     private Date updateDate;
+    private int user_id;
 
-    public Projects(int id, String name, String description, Date createDate, Date updateDate) {
+    public Projects(int id, String name, String description, Date createDate, Date updateDate, int user_id) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.createDate = createDate;
         this.updateDate = updateDate;
+        this.user_id = user_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public Projects() {

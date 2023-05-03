@@ -22,7 +22,7 @@ public class ProjectsControls {
 
     public void save(Projects project) {
 
-        String sql = "INSERT INTO projects (name,description,createDate,updateDate) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO projects (user_id,name,description,createDate,updateDate) VALUES(?,?,?,?,?)";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -31,10 +31,11 @@ public class ProjectsControls {
 
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setString(1, project.getName());
-            statement.setString(2, project.getDescription());
-            statement.setDate(3, new java.sql.Date(project.getCreateDate().getTime()));
-            statement.setDate(4, new java.sql.Date(project.getUpdateDate().getTime()));            
+            statement.setInt(1, project.getUser_id());
+            statement.setString(2, project.getName());
+            statement.setString(3, project.getDescription());
+            statement.setDate(4, new java.sql.Date(project.getCreateDate().getTime()));
+            statement.setDate(5, new java.sql.Date(project.getUpdateDate().getTime()));            
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar os dados!" + e.getMessage());
@@ -45,7 +46,7 @@ public class ProjectsControls {
 
     public void update(Projects project) throws SQLException {
 
-        String sql = "UPDATE projects SET name = ?,description = ? ,createDate = ? ,updatedate = ? WHERE id = ?";
+        String sql = "UPDATE projects SET user_id = ?, name = ?,description = ? ,createDate = ? ,updatedate = ? WHERE id = ?";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -54,11 +55,12 @@ public class ProjectsControls {
 
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setString(1, project.getName());
-            statement.setString(2, project.getDescription());
-            statement.setDate(3, new java.sql.Date(project.getCreateDate().getTime()));
-            statement.setDate(4, new java.sql.Date(project.getUpdateDate().getTime()));
-            statement.setInt(5, project.getId());
+            statement.setInt(1, project.getUser_id());
+            statement.setString(2, project.getName());
+            statement.setString(3, project.getDescription());
+            statement.setDate(4, new java.sql.Date(project.getCreateDate().getTime()));
+            statement.setDate(5, new java.sql.Date(project.getUpdateDate().getTime()));
+            statement.setInt(6, project.getId());
 
             statement.execute();
         } catch (SQLException ex) {
@@ -113,6 +115,7 @@ public class ProjectsControls {
                 Projects p = new Projects();
 
                 p.setId(result.getInt("id"));
+                p.setUser_id(result.getInt("user_id"));
                 p.setName(result.getString("name"));
                 p.setDescription(result.getString("description"));
                 p.setCreateDate(result.getDate("createDate"));
