@@ -26,7 +26,7 @@ public class User {
     }            
     public User(){
         
-        this.esta_logado = false;
+       // this.esta_logado = false;
         
     }
 

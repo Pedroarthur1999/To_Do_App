@@ -5,8 +5,10 @@
 package views;
 
 import controls.ProjectsControls;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.Projects;
+import models.User;
 
 /**
  *
@@ -15,11 +17,18 @@ import models.Projects;
 public class ProjectDialog extends javax.swing.JDialog {
 
     ProjectsControls controller;
+    private User user;
 
-    public ProjectDialog(java.awt.Frame parent, boolean modal) {
+    public ProjectDialog(java.awt.Frame parent, boolean modal, User user) {
         super(parent, modal);
         initComponents();
         controller = new ProjectsControls();
+        this.user = user;
+        
+    }
+
+    private ProjectDialog(JFrame jFrame, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -163,16 +172,13 @@ public class ProjectDialog extends javax.swing.JDialog {
 
         try {
             Projects project = new Projects();
-            
-            
+
             project.setName(jTextName.getText());
             project.setDescription(jTextDescription.getText());
+            project.setUser_id(user.getId());
             controller.save(project);
             JOptionPane.showMessageDialog(rootPane, "Projeto criado com sucesso!");
-            
-            
-            
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
@@ -180,6 +186,10 @@ public class ProjectDialog extends javax.swing.JDialog {
         this.dispose();
 
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     /**
      * @param args the command line arguments
@@ -235,6 +245,5 @@ public class ProjectDialog extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextDescription;
     private javax.swing.JTextField jTextName;
     // End of variables declaration//GEN-END:variables
-
 
 }

@@ -35,7 +35,7 @@ public class ProjectsControls {
             statement.setString(2, project.getName());
             statement.setString(3, project.getDescription());
             statement.setDate(4, new java.sql.Date(project.getCreateDate().getTime()));
-            statement.setDate(5, new java.sql.Date(project.getUpdateDate().getTime()));            
+            statement.setDate(5, new java.sql.Date(project.getUpdateDate().getTime()));
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar os dados!" + e.getMessage());
@@ -131,4 +131,39 @@ public class ProjectsControls {
         return project;
     }
 
+    public List<Projects> getAllByUserId(int userId) {
+
+        List<Projects> projectList = new ArrayList<>();
+        String sql = "SELECT * FROM projects WHERE user_id = ?";
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet rst = null;
+
+        try {
+
+            conn = ConnectionFactory.getConnection();
+            statement = conn.prepareStatement(sql);
+            statement.setInt(1, (userId));
+            rst = statement.executeQuery();
+
+            while (rst.next()) {
+                Projects project = new Projects();
+
+                project.setId(rst.getInt("id"));
+                project.setUser_id(rst.getInt("user_id"));
+                project.setName(rst.getString("name"));
+                project.setDescription(rst.getString("description"));
+                project.setCreateDate(rst.getDate("createDate"));
+                project.setUpdateDate(rst.getDate("updateDate"));
+                projectList.add(project);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao carregar o projeto!", e);
+        } finally {
+            ConnectionFactory.closeConnection(conn, statement, rst);
+        }
+        return projectList;
+    }
 }

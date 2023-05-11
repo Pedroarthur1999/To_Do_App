@@ -6,6 +6,7 @@ package views;
 
 import controls.ProjectsControls;
 import controls.TaskControls;
+import controls.UserControls;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
@@ -15,9 +16,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import models.Projects;
 import models.TaskTableModel;
 import models.Tasks;
+import models.User;
 import views.TaskDialog;
 
 /**
@@ -28,16 +31,16 @@ public class MainScreen extends javax.swing.JFrame {
 
     ProjectsControls projectController;
     TaskControls taskController;
+    UserControls userController;
+    private User users; 
     DefaultListModel projectModel;
     TaskTableModel tasksModel;
     TaskDialog taskDialog;
+    Login login;
 
-//    Projects project;;
-//
-//    public void setProject(Projects project) {
-//        this.project = project;
-//    }
-    public MainScreen() {
+
+    public MainScreen(User users) {
+        this.users = users;
         initComponents();
         initDataController();
 
@@ -47,12 +50,17 @@ public class MainScreen extends javax.swing.JFrame {
 
     }
 
+    private MainScreen() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -81,6 +89,14 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/verificacao-da-lista-da-area-de-transferencia.png"))); // NOI18N
         jLabel1.setText("ToDo APP");
 
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sair.png"))); // NOI18N
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -88,7 +104,9 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,6 +114,10 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
                 .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(28, 28, 28))
         );
 
         jPanel5.setBackground(java.awt.Color.white);
@@ -298,7 +320,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addGap(145, 145, 145))
+                .addGap(148, 148, 148))
         );
 
         jScrollPane2.add(jPanelEmpty, java.awt.BorderLayout.PAGE_START);
@@ -340,7 +362,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
 
-        ProjectDialog projectDialog = new ProjectDialog(this, rootPaneCheckingEnabled);
+        ProjectDialog projectDialog = new ProjectDialog(this, rootPaneCheckingEnabled, this.users);
 
         projectDialog.setVisible(true);
 
@@ -379,8 +401,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
-        
-        
+
         int rowIndex = jTable.rowAtPoint(evt.getPoint());
         int columnIndex = jTable.columnAtPoint(evt.getPoint());
         int projectIndex = jList1.getSelectedIndex();
@@ -411,7 +432,7 @@ public class MainScreen extends javax.swing.JFrame {
                 try {
                 taskController.removeById(task.getId());
                 tasksModel.getTasks().remove(evt);
-                    loadTask(project.getId());
+                loadTask(project.getId());
             } catch (Exception e) {
             }
 
@@ -432,6 +453,16 @@ public class MainScreen extends javax.swing.JFrame {
         //   System.out.println(project);
 
     }//GEN-LAST:event_jList1MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        Login login = new Login();
+        userController = new UserControls();
+        users.setEstaLogado(false);
+        userController.update(users);
+        this.dispose();
+        login.setVisible(true);
+
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -476,6 +507,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
@@ -509,7 +541,7 @@ public class MainScreen extends javax.swing.JFrame {
     public void initComponentsModel() {
 
         projectModel = new DefaultListModel();
-        projectLoad();
+        projectLoad(users.getId());
 
         if (!projectModel.isEmpty()) {
             jList1.setSelectedIndex(0);
@@ -530,23 +562,19 @@ public class MainScreen extends javax.swing.JFrame {
 
     }
 
-    public void projectLoad() {
+    public void projectLoad(int user_id) {
 
-        try {
-            List<Projects> project = projectController.getAll();
-            projectModel.clear();
+        List<Projects> project = projectController.getAllByUserId(user_id);
+        projectModel.clear();
+        for (int i = 0; i < project.size(); i++) {
 
-            for (int i = 0; i < project.size(); i++) {
+            Projects projects = project.get(i);
+            projectModel.addElement(projects);
 
-                Projects projects = project.get(i);
-                projectModel.addElement(projects);
-
-            }
-            jList1.setModel(projectModel);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jList1.setModel(projectModel);
+        showJTableTasks(!projectModel.isEmpty());
+        
     }
 
     public void showJTableTasks(Boolean visible) {

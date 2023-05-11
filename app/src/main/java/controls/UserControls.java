@@ -51,8 +51,8 @@ public class UserControls {
             statement = conn.prepareStatement(sql);
             statement.setString(1, usuarios.getLogin());
             statement.setString(2, usuarios.getSenha());
-            statement.setInt(3, usuarios.getId());
-            statement.setBoolean(4, usuarios.getEstaLogado());
+            statement.setBoolean(3, usuarios.getEstaLogado());
+            statement.setInt(4, usuarios.getId());
             statement.execute();
 
         } catch (SQLException e) {
@@ -113,4 +113,36 @@ public class UserControls {
         return users;
     }
 
+    public User findByEmail(String login) {
+
+        ResultSet rst = null;
+        Connection conn = null;
+        PreparedStatement statement = null;
+        String sql = "SELECT * FROM usuarios WHERE login = ?";
+        User user = null;
+        try {
+
+            conn = ConnectionFactory.getConnection();
+            statement = conn.prepareStatement(sql);
+            statement.setString(1, login);
+            rst = statement.executeQuery();
+
+            if (rst.next()) {
+
+                user = new User();
+
+                user.setId(rst.getInt("id"));
+                user.setLogin(rst.getString("login"));
+                user.setSenha(rst.getString("senha"));
+                user.setEstaLogado(rst.getBoolean("esta_logado"));
+            }
+            user.setEstaLogado(true);
+
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar usuário por e-mail: " + e.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(conn, statement, rst);
+        }
+        return user;
+    }
 }

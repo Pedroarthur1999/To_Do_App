@@ -1,10 +1,13 @@
 package views;
 
+import controls.UserControls;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import models.User;
 import utils.ConnectionFactory;
 
 /*
@@ -42,6 +45,7 @@ public class Login extends javax.swing.JFrame {
         jLabelCadastro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 96));
 
@@ -94,9 +98,9 @@ public class Login extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 41, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -144,14 +148,14 @@ public class Login extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -166,23 +170,27 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelCadastroMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-//        MainScreen mainScreen = new MainScreen();
-//        
-//        mainScreen.setVisible(true);
-//        this.dispose();
-        String login = jTextField1.getText();
-        String password = jPasswordField1.getSelectedText();
-        Connection conn = ConnectionFactory.getConnection();
-        String sql = "SELECT * FROM usuarios WHERE login = ? AND senha = ?";
-        PreparedStatement statement;
-        try {
-            statement = conn.prepareStatement(sql);
-            statement.setString(1, login);
-            statement.setString(2, password);
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+        UserControls controller = new UserControls();
+
+        String email = jTextField1.getText();
+        char[] password = jPasswordField1.getPassword();
+        String senha = new String(password);
+
+        User user = controller.findByEmail(email);
+
+        if (user != null && user.getSenha().equals(senha)) {
+            JOptionPane.showMessageDialog(rootPane, "Login efetuado com sucesso!");
+            MainScreen mainScreen = new MainScreen(user);
+            mainScreen.setVisible(true);
+            user.setEstaLogado(true);
+            controller.update(user);
+            System.out.println(user.getId());
+            this.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Email ou senha invalidos!");
+        }
 
     }//GEN-LAST:event_jButton1MouseClicked
 
