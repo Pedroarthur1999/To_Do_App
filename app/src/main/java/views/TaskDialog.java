@@ -246,6 +246,7 @@ public static void main(String args[]) {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 
         try {
+            if(!jTextName.getText().equals("")){
             Tasks task = new Tasks();
             task.setId_project(project.getId());
             task.setName(jTextName.getText());
@@ -261,6 +262,10 @@ public static void main(String args[]) {
             JOptionPane.showMessageDialog(rootPane, "Tarefa cadastrada com sucesso!");
 
             this.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Informe um nome para a tarefa!");
+            }
                                     
         } catch (ParseException ex) {
             Logger.getLogger(TaskDialog.class.getName()).log(Level.SEVERE, null, ex);

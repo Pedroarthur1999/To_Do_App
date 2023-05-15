@@ -9,6 +9,8 @@ import controls.TaskControls;
 import controls.UserControls;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -16,11 +18,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicTableHeaderUI;
 import models.Projects;
 import models.TaskTableModel;
 import models.Tasks;
 import models.User;
+import utils.ButtonCellRender;
+import utils.DeadLineColumn;
 import views.TaskDialog;
 
 /**
@@ -32,12 +38,11 @@ public class MainScreen extends javax.swing.JFrame {
     ProjectsControls projectController;
     TaskControls taskController;
     UserControls userController;
-    private User users; 
+    private User users;
     DefaultListModel projectModel;
     TaskTableModel tasksModel;
     TaskDialog taskDialog;
     Login login;
-
 
     public MainScreen(User users) {
         this.users = users;
@@ -81,7 +86,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 120, 102));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N
@@ -429,13 +434,14 @@ public class MainScreen extends javax.swing.JFrame {
             break;
             case 5:
 
-                try {
+            case 6:
+                
+              try {
                 taskController.removeById(task.getId());
                 tasksModel.getTasks().remove(evt);
                 loadTask(project.getId());
             } catch (Exception e) {
             }
-
             default:
                 throw new AssertionError();
         }
@@ -523,14 +529,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 
-    public void decorateTableTasks() {
-
-        jTable.getTableHeader().setFont(new Font("SEGOE UI", Font.BOLD, 14));
-        jTable.getTableHeader().setBackground(new Color(0, 0, 255));
-        jTable.getTableHeader().setForeground(new Color(255, 255, 255));
-
-    }
-
     public void initDataController() {
 
         projectController = new ProjectsControls();
@@ -551,6 +549,24 @@ public class MainScreen extends javax.swing.JFrame {
             loadTask(project.getId());
 
         }
+    }
+
+    public void decorateTableTasks() {
+        jTable.getTableHeader().setUI(new BasicTableHeaderUI() {
+            @Override
+            public void paint(Graphics g, JComponent c) {
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setColor(new Color(51, 0, 255)); // Define a cor de fundo
+                g2.fillRect(1, 1, c.getWidth(), c.getHeight()); // Desenha o fundo
+                super.paint(g2, c);
+            }
+        });
+        jTable.getTableHeader().setFont(new Font("SEGOE UI", Font.BOLD, 14));
+        jTable.getTableHeader().setForeground(new Color(255, 255, 255));
+        jTable.getColumnModel().getColumn(2).setCellRenderer(new DeadLineColumn());
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonCellRender("lapis"));
+        jTable.getColumnModel().getColumn(6).setCellRenderer(new ButtonCellRender("claro"));
+
     }
 
     public void loadTask(int id_project) {
@@ -574,7 +590,7 @@ public class MainScreen extends javax.swing.JFrame {
         }
         jList1.setModel(projectModel);
         showJTableTasks(!projectModel.isEmpty());
-        
+
     }
 
     public void showJTableTasks(Boolean visible) {

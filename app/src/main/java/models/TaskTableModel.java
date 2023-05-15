@@ -84,7 +84,7 @@ public class TaskTableModel extends AbstractTableModel {
             case 4:
                 return tasks.get(rowIndex).getTask_completed();
             case 5:
-                return "X";
+                return "";
             case 6:
                 return "";
             default:

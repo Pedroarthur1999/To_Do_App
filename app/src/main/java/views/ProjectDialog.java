@@ -24,7 +24,7 @@ public class ProjectDialog extends javax.swing.JDialog {
         initComponents();
         controller = new ProjectsControls();
         this.user = user;
-        
+
     }
 
     private ProjectDialog(JFrame jFrame, boolean b) {
@@ -171,19 +171,24 @@ public class ProjectDialog extends javax.swing.JDialog {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
 
         try {
-            Projects project = new Projects();
 
-            project.setName(jTextName.getText());
-            project.setDescription(jTextDescription.getText());
-            project.setUser_id(user.getId());
-            controller.save(project);
-            JOptionPane.showMessageDialog(rootPane, "Projeto criado com sucesso!");
+            if (!jTextName.getText().equals("")) {
+                Projects project = new Projects();
+                project.setName(jTextName.getText());
+                project.setDescription(jTextDescription.getText());
+                project.setUser_id(user.getId());
+                controller.save(project);
+                JOptionPane.showMessageDialog(rootPane, "Projeto criado com sucesso!");
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Insira um nome para o seu projeto!");
+            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
 
-        this.dispose();
+        
 
     }//GEN-LAST:event_jLabel2MouseClicked
 
