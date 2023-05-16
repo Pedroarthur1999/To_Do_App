@@ -45,6 +45,8 @@ public class MainScreen extends javax.swing.JFrame {
     Login login;
 
     public MainScreen(User users) {
+        
+        setTitle("ToDo App");
         this.users = users;
         initComponents();
         initDataController();
@@ -86,7 +88,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 120, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 120, 90));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N

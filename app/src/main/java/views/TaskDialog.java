@@ -27,6 +27,7 @@ public class TaskDialog extends javax.swing.JDialog {
     public TaskDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Nova Tarefa");
         controller = new TaskControls();
 
     }
@@ -54,6 +55,7 @@ public class TaskDialog extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 100));
 
+        jLabel2.setBackground(new java.awt.Color(0, 120, 90));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(java.awt.Color.white);
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -73,7 +75,7 @@ public class TaskDialog extends javax.swing.JDialog {
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 100));
+        jPanel2.setBackground(new java.awt.Color(0, 120, 90));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
@@ -86,7 +88,7 @@ public class TaskDialog extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Nome");
+        jLabel3.setText("Nome *");
 
         jTextName.setBackground(new java.awt.Color(255, 255, 255));
         jTextName.addActionListener(new java.awt.event.ActionListener() {
